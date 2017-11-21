@@ -3,12 +3,12 @@
 Electron Scroller is a package designed to manage scrolling of historical pages
 in `<webview>` tags.  Webviews in electron manage page history, offering forward
 and back, but when navigating to the pages, the scroll position is lost.  This
-package allows you to maintain the scoll position and automatically reposition
+package allows you to maintain the scroll position and automatically reposition
 the page to the proper scroll position upon navigation (back, forward, reload).
 
 ## Installation
 To install Electron Scroller, use [npm](https://docs.npmjs.com/).  The preferred
-method is to install Electron Scroller as an dependancy in your app:
+method is to install Electron Scroller as an dependency in your app:
 
 ```sh
 npm install --save electron-scroller

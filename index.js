@@ -78,7 +78,7 @@ scroller.didScroll = function (selector, position) {
 }
 
 scroller.didNavigate = function (selector) {
-  let webview = document.querySelector(`webview#${selector}`)
+  let webview = document.querySelector(selector)
   let tracker = this.trackers.get(selector)
   tracker.didNavigate(webview.getURL())
 }

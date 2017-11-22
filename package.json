@@ -1,6 +1,6 @@
 {
   "name": "electron-scroller",
-  "version": "0.5.0",
+  "version": "0.5.2",
   "description": "Manage scrolling of content inside an Electron webview element.",
   "main": "index.js",
   "scripts": {
@@ -14,5 +14,16 @@
     "browser"
   ],
   "author": "John McCormick <john@schlameel.com> (http://schlameel.com)",
-  "license": "ISC"
+  "license": "ISC",
+  "directories": {
+    "lib": "lib"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/schlameel/electron-scroller.git"
+  },
+  "bugs": {
+    "url": "https://github.com/schlameel/electron-scroller/issues"
+  },
+  "homepage": "https://github.com/schlameel/electron-scroller#readme"
 }

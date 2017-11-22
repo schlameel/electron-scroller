@@ -53,10 +53,10 @@ scroller.add = function (selector) {
   let webviewGoBack = webview.goBack
   webview.goBack = function () {
     tracker.back()
-    webviewGoBack.call(webview)/
-    self.motion = NAVTYPE.BACK/
-  }/
-  let webviewGoForward = webview.goForward/
+    webviewGoBack.call(webview)
+    self.motion = NAVTYPE.BACK
+  }
+  let webviewGoForward = webview.goForward
   webview.goForward = function () {
     tracker.forward()
     webviewGoForward.call(webview)

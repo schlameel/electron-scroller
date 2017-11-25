@@ -66,7 +66,15 @@ Scroller.prototype.add = function (selector) {
     self.motion = NAVTYPE.RELOAD
   }
   this.trackers.set(selector, tracker)
-  this.didNavigate(selector)
+
+  try {
+    if (webview.getURL()) {
+      this.didNavigate(selector)
+    }
+  } catch (e) {
+      // Nothing to do here. The webview isn't part of the DOM yet and will
+      // automatically call didNavigate once it finishes
+  }
 }
 
 //

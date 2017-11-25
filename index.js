@@ -2,7 +2,7 @@
 
 const {ipcRenderer} = require('electron')
 const ScrollTracker = require('./lib/ScrollTracker')
-const { NAVTYPE } = require('./lib/constants')
+const { EVENTS, NAVTYPE } = require('./lib/constants')
 
 var scroller = {
   trackers: new Map(),
@@ -10,6 +10,7 @@ var scroller = {
 }
 
 // Connect scroller to a webview
+// TODO: Allow array of selectors, allow element or array of elements
 scroller.add = function (selector) {
   let self = this
   selector = selector || 'webview'
@@ -50,22 +51,22 @@ scroller.add = function (selector) {
   })
 
   // Hook into the webview navigation functions
-  let webviewGoBack = webview.goBack
+  tracker.webviewGoBack = webview.goBack
   webview.goBack = function () {
     tracker.back()
-    webviewGoBack.call(webview)
+    tracker.webviewGoBack.call(webview)
     self.motion = NAVTYPE.BACK
   }
-  let webviewGoForward = webview.goForward
+  tracker.webviewGoForward = webview.goForward
   webview.goForward = function () {
     tracker.forward()
     webviewGoForward.call(webview)
     self.motion = NAVTYPE.FORWARD
   }
-  let webviewReload = webview.reload
+  tracker.webviewReload = webview.reload
   webview.reload = function () {
     tracker.reload()
-    webviewReload.call(webview)
+    tracker.webviewReload.call(webview)
     self.motion = NAVTYPE.RELOAD
   }
 }

@@ -93,12 +93,10 @@ Scroller.prototype.didNavigate = function (selector) {
 //
 // Preload Method
 //
-Scroller.prototype.preload = function (selector) {
-  selector = selector || 'webview'
+Scroller.prototype.preload = function () {
   document.addEventListener("DOMContentLoaded", function() {
     window.addEventListener('scroll', function(event) {
       ipcRenderer.sendToHost(EVENTS.DID_SCROLL, {
-        selector: selector,
         position: {
           x: window.scrollX,
           y: window.scrollY
@@ -108,7 +106,7 @@ Scroller.prototype.preload = function (selector) {
   })
   ipcRenderer.on(EVENTS.SCROLL_TO, function (event, position) {
     window.scrollTo(position.x, position.y)
-    ipcRenderer.sendToHost(EVENTS.DID_SCROLL_TO, { selector: selector, position: position })
+    ipcRenderer.sendToHost(EVENTS.DID_SCROLL_TO, { position: position })
   })
 }
 

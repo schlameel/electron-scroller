@@ -56,14 +56,12 @@ scroller.add(selector)
 ```
 
 ### Preload Javascript
-The Scroller has to be included in the preload file, calling the `preload()`
-method and again specifying the webview to be managed via a CSS selector. If
-only a single webview exists, it is not necessary to pass the selector.  In this
-example, in the file `preload.js`:
+The Scroller has to be included in the preload file by calling the `preload()`
+method. It is not necessary to pass the selector.  In this example, in the file
+`preload.js`:
 
 ```javascript
-const scroller = require('electron-scroller')
-scroller.preload('#browserView')
+require('electron-scroller').preload()
 ```
 
 # License

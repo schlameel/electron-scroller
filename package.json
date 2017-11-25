@@ -1,6 +1,6 @@
 {
   "name": "electron-scroller",
-  "version": "0.5.6",
+  "version": "0.6.0",
   "description": "Manage scrolling of content inside an Electron webview element.",
   "main": "index.js",
   "scripts": {

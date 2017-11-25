@@ -4,14 +4,14 @@ const {ipcRenderer} = require('electron')
 const ScrollTracker = require('./lib/ScrollTracker')
 const { EVENTS, NAVTYPE } = require('./lib/constants')
 
-var scroller = {
-  trackers: new Map(),
-  motion: NAVTYPE.NEW_PAGE
+function Scroller() {
+  this.trackers = new Map()
+  this.motion = NAVTYPE.NEW_PAGE
 }
 
 // Connect scroller to a webview
 // TODO: Allow array of selectors, allow element or array of elements
-scroller.add = function (selector) {
+Scroller.prototype.add = function (selector) {
   let self = this
   selector = selector || 'webview'
   let webview = document.querySelector(selector)
@@ -25,15 +25,11 @@ scroller.add = function (selector) {
     throw new DuplicateError(msg)
   }
   let tracker = new ScrollTracker(selector)
-  this.trackers.set(selector, tracker)
 
   // Set up webview event listeners
   webview.addEventListener('ipc-message', function(e) {
     if (e.channel === EVENTS.DID_SCROLL) {
-      let data = e.args[0]
-      if (data.selector === selector) {
-        self.didScroll.call(self, selector, data.position)
-      }
+      self.didScroll.call(self, selector, e.args[0].position)
     }
   })
   webview.addEventListener('did-navigate', function() {
@@ -60,7 +56,7 @@ scroller.add = function (selector) {
   tracker.webviewGoForward = webview.goForward
   webview.goForward = function () {
     tracker.forward()
-    webviewGoForward.call(webview)
+    tracker.webviewGoForward.call(webview)
     self.motion = NAVTYPE.FORWARD
   }
   tracker.webviewReload = webview.reload
@@ -69,16 +65,18 @@ scroller.add = function (selector) {
     tracker.webviewReload.call(webview)
     self.motion = NAVTYPE.RELOAD
   }
+  this.trackers.set(selector, tracker)
+  this.didNavigate(selector)
 }
 
 //
 // Event Handlers
 //
-scroller.didScroll = function (selector, position) {
+Scroller.prototype.didScroll = function (selector, position) {
   this.trackers.get(selector).didScroll(position)
 }
 
-scroller.didNavigate = function (selector) {
+Scroller.prototype.didNavigate = function (selector) {
   let webview = document.querySelector(selector)
   let tracker = this.trackers.get(selector)
   tracker.didNavigate(webview.getURL())
@@ -87,7 +85,7 @@ scroller.didNavigate = function (selector) {
 //
 // Preload Method
 //
-scroller.preload = function (selector) {
+Scroller.prototype.preload = function (selector) {
   selector = selector || 'webview'
   document.addEventListener("DOMContentLoaded", function() {
     window.addEventListener('scroll', function(event) {
@@ -129,4 +127,4 @@ function isElement(obj) {
   }
 }
 
-module.exports = scroller
+module.exports = new Scroller()

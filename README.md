@@ -51,8 +51,12 @@ process and before configuring the webview. In this example, in the file
 ```javascript
 const scroller = require('electron-scroller')
 
-let selector = '#browserView'
-scroller.add(selector)
+onload = function() {
+  let selector = '#browserView'
+  scroller.add(selector)
+  // The selector is not required if there is only a single webview:
+  // scroller.add()
+}
 ```
 
 ### Preload Javascript
